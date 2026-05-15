@@ -861,8 +861,11 @@ a { color: inherit; text-decoration: none; }
       </div>
 
       <form class="form reveal reveal-delay-2" id="appointmentForm" novalidate
-            action="https://formspree.io/f/REPLACE_WITH_YOUR_ID"
+            action="https://formsubmit.co/ajax/beatrice.forstudying@gmail.com"
             method="POST">
+        <input type="hidden" name="_subject" value="Programare noua — Notar Ludmila Stepanov">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
         <h3 class="form__title" data-key="form_title">Cerere de programare</h3>
         <div class="form__grid">
           <div class="form__group">
@@ -1232,12 +1235,14 @@ form.addEventListener('submit', async e => {
   btn.textContent = '...';
 
   try {
+    const data = Object.fromEntries(new FormData(form));
     const res = await fetch(form.action, {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
     });
-    if (res.ok) {
+    const json = await res.json();
+    if (res.ok && json.success) {
       form.reset();
       success.classList.add('show');
       success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
